@@ -1,8 +1,46 @@
-import { Button, Label, TextInput } from 'flowbite-react'
-import { Link } from 'react-router-dom'
+import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 export default function SignUp() {
+  const navigate = useNavigate();
+  const [ errorMessage, setErrorMessage ] = useState(null);
+  const [ loading, setLoading ] = useState(false);
+  const [ formData, setFormData ] = useState({})
+  const handleChange = (event) => {
+    // Ths code allow to read new value from the input and keep the values of the others inputs
+    setFormData({...formData, [event.target.id]: event.target.value.trim() })
+  }
+  console.log(formData)
+  const handleSubmit = async(event) => {
+    event.preventDefault();
+    if (!formData.username ||!formData.email ||!formData.password) {
+      return setErrorMessage('Please fill out all the fields');
+    }
+    try {
+      setLoading(true);
+      setErrorMessage(null);
+      // we need to create a proxy which is specfyed in the vite.config.js file n order this fetch is called
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        setLoading(false);
+        return setErrorMessage('Invalid information');
+      }  
+      setLoading(false);
+      if (res.ok) navigate('/sign-in');       
+    } catch (error) {
+      setErrorMessage(error.message);
+      setLoading(false);
+    }
+  }
   return (
     <div className='min-h-screen mt-20 gap-5'> 
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center">
@@ -22,13 +60,16 @@ export default function SignUp() {
         </div>
       {/* right side */}
         <div className="flex-1">
-          <form className='flex flex-col gap-4'>
+          <form 
+            className='flex flex-col gap-4'
+            onSubmit={handleSubmit}>
             <div>
               <Label value='Your Username' />
               <TextInput
                 type='text'
                 placeholder='Username'
                 id='username'
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -37,6 +78,7 @@ export default function SignUp() {
                 type='text'
                 placeholder='Email'
                 id='email'
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -45,10 +87,24 @@ export default function SignUp() {
                 type='password'
                 placeholder='Password'
                 id='password'
+                onChange={handleChange}
               />
             </div>
-            <Button gradientDuoTone='purpleToPink' type='submit'>
-              Sign Up
+            <Button 
+              gradientDuoTone='purpleToPink' 
+              type='submit'
+              disabled={loading}
+            >
+              {
+                loading? (
+                  <>
+                    <Spinner size='sm'/>
+                    <span className='pl-3'>Loading...</span>
+                  </>
+                ) : (
+                  'Sign Up'
+                )
+              }
             </Button>
           </form>
           <div className='flex gap-2 text-sm mt-5'>
@@ -57,6 +113,13 @@ export default function SignUp() {
               Sign In
             </Link>
           </div>
+          {
+            errorMessage && (
+              <Alert className='mt-5' color='failure'>
+                {errorMessage}
+              </Alert>
+            )
+          }
         </div>
       </div>
     </div>
