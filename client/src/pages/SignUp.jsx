@@ -1,13 +1,20 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-
+import { FaEye, FaEyeSlash } from'react-icons/fa'
+import {HiMail} from'react-icons/hi'
 
 export default function SignUp() {
   const navigate = useNavigate();
   const [ errorMessage, setErrorMessage ] = useState(null);
   const [ loading, setLoading ] = useState(false);
-  const [ formData, setFormData ] = useState({})
+  const [ formData, setFormData ] = useState({});
+  const [ showPassword, setShowPassword ] = useState(true);
+
+  //const PasswordIcon = showPassword? <FaEyeSlash /> : <FaEye />;
+
+  
+
   const handleChange = (event) => {
     // Ths code allow to read new value from the input and keep the values of the others inputs
     setFormData({...formData, [event.target.id]: event.target.value.trim() })
@@ -72,10 +79,11 @@ export default function SignUp() {
                 onChange={handleChange}
               />
             </div>
-            <div>
+            <div className='mb-2 block'>
               <Label value='Your Email' />
               <TextInput
-                type='text'
+                type='email'
+                rightIcon={HiMail}
                 placeholder='Email'
                 id='email'
                 onChange={handleChange}
@@ -83,12 +91,25 @@ export default function SignUp() {
             </div>
             <div>
               <Label value='Your username' />
-              <TextInput
-                type='password'
-                placeholder='Password'
-                id='password'
-                onChange={handleChange}
-              />
+              <div onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? (
+                <TextInput
+                  type="text"
+                  placeholder="Password"
+                  id="password"
+                  rightIcon={FaEye}
+                  onChange={handleChange}
+                />
+              ) : (
+                <TextInput
+                  type="password"
+                  placeholder="Password"
+                  id="password"
+                  rightIcon={FaEyeSlash}
+                  onChange={handleChange}
+                />
+              )}
+            </div>
             </div>
             <Button 
               gradientDuoTone='purpleToPink' 
@@ -109,7 +130,7 @@ export default function SignUp() {
           </form>
           <div className='flex gap-2 text-sm mt-5'>
             <span>Have an account?</span>
-            <Link to='/sig-in' className='text-blue-500'>
+            <Link to='/sign-in' className='text-blue-500'>
               Sign In
             </Link>
           </div>
@@ -125,3 +146,5 @@ export default function SignUp() {
     </div>
   )
 }
+
+
