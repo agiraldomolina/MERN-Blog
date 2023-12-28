@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
 
 dotenv.config();
 
@@ -19,6 +21,11 @@ const app = express();
 
 // Next line allows us to send json data to the backend
 app.use(express.json());
+
+// app.use(bodyParser.json()); // Para analizar cuerpos de solicitud en formato JSON
+// app.use(bodyParser.urlencoded({ extended: true }));
+
+// app.use(cookieParser());
 
 app.listen(3000, () => {
     console.log('Server running on port 3000!!!');
