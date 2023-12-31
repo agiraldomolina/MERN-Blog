@@ -39,7 +39,7 @@ export default function Header() {
                 onClick={()=>dispatch(changeTheme())}
             >
                 {
-                    theme === 'dark'? <FaMoon /> : <FaSun />
+                    theme === 'dark'? <FaSun /> : <FaMoon />
                 }
             </Button>
             {
