@@ -19,7 +19,7 @@ export default function Dashboard() {
         {/* SideBar */}
         <DashSideBar />
       </div>
-      {/* Prifile ... */}
+      {/* Profile ... */}
       {tab === 'profile' && <DashProfile />}
     </div>
   )
