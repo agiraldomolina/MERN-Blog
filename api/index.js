@@ -19,13 +19,14 @@ mongoose.connect(
 
 const app = express();
 
+
 // Next line allows us to send json data to the backend
 app.use(express.json());
 
+app.use(cookieParser()); // this allows the browser to extract the token from the cookies
 // app.use(bodyParser.json()); // Para analizar cuerpos de solicitud en formato JSON
 // app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(cookieParser());
 
 app.listen(3000, () => {
     console.log('Server running on port 3000!!!');

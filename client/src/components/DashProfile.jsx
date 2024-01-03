@@ -31,36 +31,28 @@ export default function DashProfile() {
   },[imageFile]);
   
   const uploadImage = async () => {
-    // service firebase.storage {
-    //   match /b/{bucket}/o {
-    //     match /{allPaths=**} {
-    //       allow read,
-    //       write: if 
-    //       request.resource.size < 2*1024 *1024 &&
-    //       request.resource.contentType.matches('image/*')
-    //     }
-    //   }
-    // }
     setImageFileUploadError(null)
     const storage = getStorage(app)
     const fileName =new Date().getTime() + imageFile.name
     const storageRef = ref(storage, fileName)
     const uploadTask = uploadBytesResumable(storageRef, imageFile)
-    uploadTask.on('state_changed', (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      setImageFileUploadingProgress(progress.toFixed(0))
-    },
-    (error)=>{
-      setImageFileUploadError('Could not upload image, file must be smaller than 2MB')
-      setImageFileUploadingProgress(null)
-      setImageFile(null)
-      setImageFileUrl(null)
-    },
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((downLoadURL) => {
-        setImageFileUrl(downLoadURL)
-      })
-    } )
+    uploadTask.on(
+      'state_changed', (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setImageFileUploadingProgress(progress.toFixed(0))
+      },
+      ()=>{
+        setImageFileUploadError('Could not upload image, file must be smaller than 2MB')
+        setImageFileUploadingProgress(null)
+        setImageFile(null)
+        setImageFileUrl(null)
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downLoadURL) => {
+          setImageFileUrl(downLoadURL)
+        })
+      }
+    )
   }
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
