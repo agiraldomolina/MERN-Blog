@@ -48,6 +48,7 @@ export const signin = catchAsync(async (req, res, next) => {
     .json(userWithoutPassword)
 });
 
+
 export const google = async (req, res, next) => {
     const { email, name, googlePhotoUrl } = req.body;
     try {

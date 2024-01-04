@@ -11,7 +11,10 @@ import {
   updateFailure,
   deleteUserStart,
   deleteUserSuccess,
-  deleteUserFailure
+  deleteUserFailure,
+  signOutStart,
+  signOutSuccess,
+  signOutFailure
 } from '../redux/user/userSlice'
 import {useDispatch} from'react-redux'
 import { HiOutlineCheckCircle, HiOutlineExclamationCircle, HiXCircle } from "react-icons/hi";
@@ -140,7 +143,22 @@ const handleDeleteAccount = async () => {
   } catch (error) {
     dispatch(deleteUserFailure(error.message));
   }
+};
 
+const handleSignOut = async () => {
+  try {
+    dispatch(signOutStart());
+    const response = await fetch(`/api/user/signout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await response.json();
+    !response.ok? dispatch(signOutFailure(data.message)) : dispatch(signOutSuccess())
+  } catch (error) {
+    dispatch(signOutFailure(error.message));
+  }
 }
 
   return (
@@ -230,7 +248,12 @@ const handleDeleteAccount = async () => {
           >
           Delete account
         </span>
-        <span className='cursor-pointer'>Sign Out</span>
+        <span 
+          className='cursor-pointer'
+          onClick={handleSignOut}
+        >
+          Sign Out
+        </span>
       </div>
         {updateUserSuccess && (
           <Alert 
