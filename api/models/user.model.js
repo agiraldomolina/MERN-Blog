@@ -19,6 +19,10 @@ const userSchema = new mongoose.Schema({
     avatar: {
         type: String,
         default: 'https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/',
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 

@@ -32,7 +32,7 @@ export const signin = catchAsync(async (req, res, next) => {
     if(!user || !await user.correctPassword(password, user.password)) return next(errorHandler(400, "Invalid email or password"));
 
     // create a token
-    const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET);
+    const token = jwt.sign({_id: user._id, isAdmin: user.isAdmin}, process.env.JWT_SECRET);
 
     // destructuring the user object
     const {password:pass, ...userWithoutPassword} = user._doc
