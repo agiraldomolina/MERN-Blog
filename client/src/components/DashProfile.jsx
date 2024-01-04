@@ -1,4 +1,4 @@
-import { Alert, Button, TextInput } from 'flowbite-react'
+import { Alert, Button, Modal, TextInput } from 'flowbite-react'
 import { useEffect, useRef, useState } from 'react'
 import {useSelector} from 'react-redux'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
@@ -8,13 +8,16 @@ import 'react-circular-progressbar/dist/styles.css';
 import {
   updateStart,
   updateSuccess,
-  updateFailure
+  updateFailure,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserFailure
 } from '../redux/user/userSlice'
 import {useDispatch} from'react-redux'
-import { HiOutlineCheckCircle, HiXCircle } from "react-icons/hi";
+import { HiOutlineCheckCircle, HiOutlineExclamationCircle, HiXCircle } from "react-icons/hi";
 
 export default function DashProfile() {
-  const {currentUser} = useSelector((state) => state.user)
+  const {currentUser, error} = useSelector((state) => state.user)
   const [imageFile, setImageFile] = useState(null)
   const [imageFileUrl, setImageFileUrl] = useState(null)
   const filePickerRef = useRef()
@@ -23,6 +26,7 @@ export default function DashProfile() {
   const [imageFileUploading, setImageFileUploading] = useState(false);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null)
   const [updateUserError, setUpdateUserError] = useState(null)
+  const [showModal, setShowModal] = useState(false)
   const [formData, setFormData] = useState({})
   const dispatch = useDispatch()
   //console.log(imageFileUploadingProgress, imageFileUploadError)
@@ -115,6 +119,30 @@ const handleSubmit = async(event) => {
   }
 }
 
+const handleDeleteAccount = async () => {
+  setShowModal(false);
+  console.log('current user from dashboard profile: ' +  currentUser._id)
+  try {
+    dispatch(deleteUserStart());
+    const response = await fetch(`/api/user/delete/${currentUser._id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const data = await response.json();
+    if (!response.ok){
+      dispatch(deleteUserFailure(data.message));
+
+    }else{
+      dispatch(deleteUserSuccess(data));
+    }
+  } catch (error) {
+    dispatch(deleteUserFailure(error.message));
+  }
+
+}
+
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
       <h1 
@@ -196,7 +224,12 @@ const handleSubmit = async(event) => {
 
       </form>
       <div className="text-red-500 flex justify-between mt-5">
-        <span className='cursor-pointer'>Delete account</span>
+        <span 
+          className='cursor-pointer'
+          onClick={()=>setShowModal(true)}
+          >
+          Delete account
+        </span>
         <span className='cursor-pointer'>Sign Out</span>
       </div>
         {updateUserSuccess && (
@@ -216,6 +249,52 @@ const handleSubmit = async(event) => {
               {updateUserError}
             </Alert>
           )}
+          {error && (
+            <Alert 
+              color='failure'
+              icon={HiXCircle}
+              className='mt-5'
+            >
+              {error}
+            </Alert>
+          )}
+          <Modal 
+            show={showModal}
+            onClose={()=>setShowModal(false)}
+            popup
+            size='md'
+          >
+            <Modal.Header/> 
+              <Modal.Body>
+                <div className="text-center">
+                  <HiOutlineExclamationCircle 
+                    className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto'
+                  />
+                  <h1
+                    className='text-lg text-gray-500 dark:text-gray-300 mb-2'
+                  >
+                    Are you sure you want to delete your account?
+                  </h1>
+                </div>
+              </Modal.Body>
+              <div className=" flex mx-auto gap-5 mb-6">
+                <Button 
+                  gradientDuoTone='purpleToBlue'
+                  outline
+                  onClick={()=>setShowModal(false)}
+                >
+                  No, cancel
+                </Button>
+                <Button 
+                  gradientDuoTone='purpleToBlue'
+                  outline
+                  onClick={handleDeleteAccount}
+                >
+                  Yes, I'm sure
+                </Button>
+              </div>
+          </Modal>
+
     </div>
   )
 }
