@@ -36,6 +36,7 @@ export const signin = catchAsync(async (req, res, next) => {
 
     // destructuring the user object
     const {password:pass, ...userWithoutPassword} = user._doc
+    console.log('userWithoutPassword:'+ JSON.stringify(userWithoutPassword));
 
     // send the token back to the client
     res
