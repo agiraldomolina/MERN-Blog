@@ -34,6 +34,8 @@ export const signin = catchAsync(async (req, res, next) => {
     // create a token
     const token = jwt.sign({_id: user._id, isAdmin: user.isAdmin}, process.env.JWT_SECRET);
 
+    console.log('token from signin: ' + token);
+
     // destructuring the user object
     const {password:pass, ...userWithoutPassword} = user._doc
     console.log('userWithoutPassword:'+ JSON.stringify(userWithoutPassword));
@@ -55,7 +57,7 @@ export const google = async (req, res, next) => {
       const user = await User.findOne({ email });
       if (user) {
         const token = jwt.sign(
-          { id: user._id, isAdmin: user.isAdmin },
+          { _id: user._id, isAdmin: user.isAdmin },
           process.env.JWT_SECRET
         );
         const { password, ...rest } = user._doc;
@@ -80,7 +82,7 @@ export const google = async (req, res, next) => {
         });
         await newUser.save();
         const token = jwt.sign(
-          { id: newUser._id, isAdmin: newUser.isAdmin },
+          { _id: newUser._id, isAdmin: newUser.isAdmin },
           process.env.JWT_SECRET
         );
         const { password, ...rest } = newUser._doc;
