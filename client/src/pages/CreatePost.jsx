@@ -101,10 +101,10 @@ export default function CreatePost() {
                     onChange={(e) => setFormData({...formData, category: e.target.value })}
                 >
                     <option value='uncategorized'>Select  a category</option>
-                    <option value='nutrition'>Nutrition and Healthy Eating </option>
-                    <option value='fitness'>Fitness and Exercise</option>
-                    <option value='mental'>Mental Health and Mindfulness</option>
-                    <option value='lifestyle'>Lifestyle and Wellness Tips</option>
+                    <option value='Nutrition and Healthy Eating'>Nutrition and Healthy Eating </option>
+                    <option value='Fitness and Exercise'>Fitness and Exercise</option>
+                    <option value='Mental Health and Mindfulness'>Mental Health and Mindfulness</option>
+                    <option value='Lifestyle and Wellness Tips'>Lifestyle and Wellness Tips</option>
                 </Select>
             </div>
             <div 
