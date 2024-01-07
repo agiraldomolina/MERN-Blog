@@ -16,6 +16,14 @@ export const create = catchAsync(async (req, res, next) => {
     .json(savedPost);
 });
 
+export const deletePost = catchAsync(async (req, res, next) => {
+    if (req.params.userId!== req.user._id || !req.user.isAdmin) return next(errorHandler(403, 'You are not authorized to perform this action'));
+    await Post.findByIdAndDelete(req.params.postId);
+    res
+    .status(200)
+    .json('The post has been deleted')
+})
+
 export const getPosts = catchAsync(async (req, res, next) => {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
