@@ -10,7 +10,9 @@ export const test = (req,res) => {
 
 export const getUsers = catchAsync( async(req,res,next) => {
     // chech is user is admin
+    //console.log('admin : ' + req.user.isAdmin);
     if(!req.user.isAdmin) return next( errorHandler(403, 'You are not allow to view this user'));
+    console.log('hi')
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 10;
     const sortDirection = req.query.sort === 'asc'? 1:-1;
@@ -99,15 +101,19 @@ export const updateUser = catchAsync( async(req,res,next) => {
 });
 
 export const deleteUser = catchAsync( async(req,res,next) => {
-    // console.log('userId from params: ' + req.params.userId);
-    // console.log ('userId from user: ' + req.user.id);
-    // console.log('req.body:'+ JSON.stringify(req.body));
-    if (!req.user.isAdmin && req.user.id!== req.params.userId ) return next( errorHandler(403, 'You are not allow to delete this user'));
-    await User.findByIdAndDelete(req.params.userId);
-    res.clearCookie('access_token');
-    res
-    .status(200)
-    .json('User deleted successfully')
+    //  console.log('userId from params: ' + req.params.userId);
+    //  console.log ('userId from user: ' + req.user._id);
+    //  console.log('req.body:'+ JSON.stringify(req.body));
+    // console.log(req.user._id === req.params.userId)
+    if (req.user.isAdmin || req.user._id === req.params.userId ) {
+        await User.findByIdAndDelete(req.params.userId);
+        res.clearCookie('access_token');
+        res
+        .status(200)
+        .json('User deleted successfully')
+    }else{
+        return next( errorHandler(403, 'You are not allow to delete this user'));
+    }
 });
 
 export const signOut = catchAsync(async (req, res, next) => {

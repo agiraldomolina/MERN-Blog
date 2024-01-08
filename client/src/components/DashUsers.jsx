@@ -14,6 +14,7 @@ export default function DashUsers() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        //console.log('admin from client: ' + currentUser.isAdmin);
         const response = await fetch(`/api/user/getusers`);
         const data = await response.json();
         if (response.ok) {

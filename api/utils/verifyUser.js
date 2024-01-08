@@ -10,7 +10,7 @@ export const verifyToken =  async(req,res,next) => {
          //console.log('error from verify token: ' + err);
         if (err) return next( errorHandler(401, 'Unauthorized'));
         req.user = user;
-         console.log('user from verify user: ' + JSON.stringify(req.user) )
+         //console.log('user from verify user: ' + JSON.stringify(req.user) )
         next();
     })
 }
