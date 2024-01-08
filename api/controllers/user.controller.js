@@ -46,6 +46,7 @@ export const getUsers = catchAsync( async(req,res,next) => {
     });
 });
 
+
 export const updateUser = catchAsync( async(req,res,next) => {
     // console.log('userId from params: ' + req.params.userId);
      console.log ('userId from user: ' + req.user._id);
@@ -101,7 +102,7 @@ export const deleteUser = catchAsync( async(req,res,next) => {
     // console.log('userId from params: ' + req.params.userId);
     // console.log ('userId from user: ' + req.user.id);
     // console.log('req.body:'+ JSON.stringify(req.body));
-    if (req.user.id!== req.params.userId) return next( errorHandler(403, 'You are not allow to delete this user'));
+    if (!req.user.isAdmin && req.user.id!== req.params.userId ) return next( errorHandler(403, 'You are not allow to delete this user'));
     await User.findByIdAndDelete(req.params.userId);
     res.clearCookie('access_token');
     res
