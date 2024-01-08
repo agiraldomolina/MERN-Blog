@@ -6,7 +6,45 @@ import { errorHandler } from "../utils/error.js";
 
 export const test = (req,res) => {
     res.json({message : "MERN api is working!"})
-}
+};
+
+export const getUsers = catchAsync( async(req,res,next) => {
+    // chech is user is admin
+    if(!req.user.isAdmin) return next( errorHandler(403, 'You are not allow to view this user'));
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const sortDirection = req.query.sort === 'asc'? 1:-1;
+    const users = await User.find()
+        .sort({createdAt: sortDirection})
+        .skip(startIndex)
+        .limit(limit);
+
+    const usersWithoutPassword = users.map((user)=>{
+        //get user without password
+        const {password, ...userWithoutPassword} = user._doc;
+        return userWithoutPassword;
+        }
+    );
+    const totalUsers = await User.countDocuments();
+
+    const now = new Date();
+
+    const oneMonthAgo = new Date(
+        now.getFullYear(),
+        now.getMonth() - 1,
+        now.getDate()
+    );
+
+    const lastMonthsUsers = await User.countDocuments({
+        createdAt: { $gte: oneMonthAgo }
+    });
+
+    res.status(200).json({
+        users: usersWithoutPassword,
+        totalUsers,
+        lastMonthsUsers
+    });
+});
 
 export const updateUser = catchAsync( async(req,res,next) => {
     // console.log('userId from params: ' + req.params.userId);
