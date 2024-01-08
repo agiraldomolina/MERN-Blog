@@ -22,6 +22,24 @@ export const deletePost = catchAsync(async (req, res, next) => {
     res
     .status(200)
     .json('The post has been deleted')
+});
+
+export const updatePost = catchAsync(async (req, res, next) => {
+    if (req.params.userId!== req.user._id ||!req.user.isAdmin) return next(errorHandler(403, 'You are not authorized to perform this action'));
+    console.log(req.body);
+    const updatedPost = await Post.findByIdAndUpdate(
+        req.params.postId, 
+        {
+            $set: {
+                title: req.body.title,
+                content: req.body.content,
+                category: req.body.category,
+                image: req.body.image,
+            },         
+        }, { new: true });
+    res
+   .status(200)
+   .json(updatedPost);   
 })
 
 export const getPosts = catchAsync(async (req, res, next) => {
