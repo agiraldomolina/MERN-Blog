@@ -3,8 +3,8 @@ import { catchAsync } from '../utils/catchAsync.js'
 import { errorHandler } from '../utils/error.js';
 
 export const createComment = catchAsync(async (req, res, next) => {
-    console.log('hi from create comment');
-    console.log(req.body);
+    //console.log('hi from create comment');
+    //console.log(req.body);
     const { content, postId, userId } = req.body;
     console.log(postId);
 
@@ -20,4 +20,11 @@ export const createComment = catchAsync(async (req, res, next) => {
     res
     .status(200)
     .json(newComment)
+});
+
+export const getPostComments = catchAsync(async (req, res, next) => {
+    const postComments = await Comment.find({postId: req.params.postId}).sort({'createdAt': -1});
+    res
+    .status(200)
+    .json(postComments)
 })
