@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import {Link, useParams} from 'react-router-dom'
 import CallToAction from '../components/CallToAction';
+import CommentSection from '../components/CommentSection';
 
 export default function PostPage() {
     const {postSlug} = useParams();useState
@@ -73,6 +74,7 @@ export default function PostPage() {
         >
             <CallToAction/>
         </div>
+        <CommentSection postId={post && post._id}/>
     </main>
   )
 }
