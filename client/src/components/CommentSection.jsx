@@ -1,15 +1,15 @@
 import { Alert, Button,  Textarea } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import {useSelector} from 'react-redux'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Comment from './Comment';
-
 
 export default function CommentSection({postId}) {
     const {currentUser} = useSelector(state => state.user);
     const [comment, setComment] = useState('');
     const [postComments, setPostComments] = useState([]);
     const [commentError, setCommentError] = useState(null);
+    const navigate = useNavigate();
     console.log(postComments);
 
     useEffect(() => {
@@ -59,6 +59,35 @@ export default function CommentSection({postId}) {
             setCommentError(error.message);
         }
     };
+
+    const handleLike = async (commentId) => {
+        try {
+            if (!currentUser) {
+                navigate('/sign-in');
+                return
+            }
+            const response = await fetch(`/api/comment/likeComment/${commentId}`, {
+                method: 'PUT',
+                })
+            if (response.ok) {
+                const data = await response.json();
+                setPostComments(postComments.map(comment =>{
+                    if(comment._id === commentId){
+                        comment._id === commentId ?
+                        {
+                            ...comment,
+                             likes: data.likes, 
+                             numberOfLikes: data.likes.length
+                        } :
+                        comment
+                        console.log('comment from handleLike' + JSON.stringify(comment))
+                    }
+                }));
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
 
   return (
     <div className='p-3 max-w-2xl mx-auto w-full'>
@@ -127,11 +156,13 @@ export default function CommentSection({postId}) {
                 </div>
                  {/* loop througth all comments and display them */}
                 {
-                    postComments.map((comment) => (
-                        <Comment key={comment._id} comment = {comment && comment}/>))
+                    postComments.map((comment, index) => {
+                        console.log('postComment from throuble part:', comment);
+                        console.log('comment id from throuble part:', comment._id);
+                        return <Comment key={index} commentId={comment._id} onLike={handleLike} />;
+                    })
                 }
                 </>
-
             )
         }
     </div>
