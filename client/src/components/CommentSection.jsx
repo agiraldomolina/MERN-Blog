@@ -89,6 +89,13 @@ export default function CommentSection({postId}) {
         } catch (error) {
             console.log(error.message);
         }
+    };
+
+    const handleEdit = async (comment, editedContent) => {
+        setPostComments(
+            postComments.map((comment)=>
+            comment._id === comment._id ?{...comment, content: editedContent} : comment)
+        )
     }
 
   return (
@@ -159,13 +166,11 @@ export default function CommentSection({postId}) {
                  {/* loop througth all comments and display them */}
                 {
                     postComments.map((comment, index) => (
-                        //console.log('postComment from throuble part:', comment);
-                        //console.log('comment id from throuble part:', comment._id);
                         <Comment 
                             key={index} 
                             comment={comment} 
                             onLike={handleLike}
-                            
+                            onEdit={handleEdit} 
                         />
                     ))
                 }
