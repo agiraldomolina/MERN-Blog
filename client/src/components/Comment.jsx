@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from "react-redux";
 
 
-export default function Comment({commentId, onLike}) {
+export default function Comment({commentId, onLike, fetchPostComments}) {
   console.log('commetId: ' + commentId);
   const [user, setUser] = useState({})
   const [comment, setComment] = useState({})
@@ -35,6 +35,7 @@ export default function Comment({commentId, onLike}) {
           if (userData) {
             setUser(userData);
           }
+          fetchPostComments()
         }
       } catch (error) {
         console.log(error);
@@ -75,6 +76,7 @@ export default function Comment({commentId, onLike}) {
               onClick={()=>onLike(comment._id)}
               className={`text-gray-400 hover:text-blue-500 ${
                 currentUser &&
+                comment &&
                 comment.likes && // Verificar si comment.likes existe
                 comment.likes.includes(currentUser._id) &&
                 '!text-blue-500'

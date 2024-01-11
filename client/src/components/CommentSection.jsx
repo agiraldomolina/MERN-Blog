@@ -12,27 +12,6 @@ export default function CommentSection({postId}) {
     const navigate = useNavigate();
     console.log(postComments);
 
-    useEffect(() => {
-        const fetchPostComments = async () => {
-            console.log(postId);
-            try {
-                const response = await fetch(`/api/comment/getPostComments/${postId}`,{
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                if (response.ok) {
-                    const data = await response.json();
-                    setPostComments(data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchPostComments();
-    }, [postId]);
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (comment.length > 200) return;
@@ -60,6 +39,28 @@ export default function CommentSection({postId}) {
         }
     };
 
+    const fetchPostComments = async () => {
+        console.log(postId);
+        try {
+            const response = await fetch(`/api/comment/getPostComments/${postId}`);
+            if (response.ok) {
+                const data = await response.json();
+                setPostComments(data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {   
+        // setPostComments(postComments.map(comment => 
+        //     comment._id === commentId
+        //       ? { ...comment, likes: data.likes, numberOfLikes: data.likes.length }
+        //       : comment
+        //   ));   
+        fetchPostComments();
+    }, [postId]);
+
     const handleLike = async (commentId) => {
         try {
             if (!currentUser) {
@@ -69,21 +70,18 @@ export default function CommentSection({postId}) {
             const response = await fetch(`/api/comment/likeComment/${commentId}`, {
                 method: 'PUT',
                 })
-            if (response.ok) {
-                const data = await response.json();
-                setPostComments(postComments.map(comment =>{
-                    if(comment._id === commentId){
-                        comment._id === commentId ?
-                        {
-                            ...comment,
-                             likes: data.likes, 
-                             numberOfLikes: data.likes.length
-                        } :
-                        comment
-                        console.log('comment from handleLike' + JSON.stringify(comment))
-                    }
-                }));
-            }
+                if (response.ok) {
+                    const data = await response.json();
+                    setPostComments((prevComments) =>
+                      prevComments.map((comment) =>
+                        comment._id === commentId
+                          ? { ...comment, likes: data.likes, numberOfLikes: data.likes.length }
+                          : comment
+                      )
+                    );
+                    fetchPostComments();
+                  }
+              
         } catch (error) {
             console.log(error.message);
         }
@@ -159,7 +157,12 @@ export default function CommentSection({postId}) {
                     postComments.map((comment, index) => {
                         console.log('postComment from throuble part:', comment);
                         console.log('comment id from throuble part:', comment._id);
-                        return <Comment key={index} commentId={comment._id} onLike={handleLike} />;
+                        return <Comment 
+                            key={index} 
+                            commentId={comment._id} 
+                            onLike={handleLike}
+                            fetchPostComments={fetchPostComments}
+                        />;
                     })
                 }
                 </>
