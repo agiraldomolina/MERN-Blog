@@ -113,11 +113,8 @@ export default function CommentSection({postId}) {
                 })
             if (response.ok) {
                 const data = await response.json();
-                    
-                //console.log(data);
                 setPostComments(
-                    postComments.filter((comment) => comment._id!== commentId))
-                ;
+                    postComments.filter((comment) => comment._id!== commentId));
             }                   
         } catch (error) {
             console.log(error.message);
