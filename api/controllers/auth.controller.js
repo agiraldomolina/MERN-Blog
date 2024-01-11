@@ -34,11 +34,11 @@ export const signin = catchAsync(async (req, res, next) => {
     // create a token
     const token = jwt.sign({_id: user._id, isAdmin: user.isAdmin}, process.env.JWT_SECRET);
 
-    console.log('token from signin: ' + token);
+    //console.log('token from signin: ' + token);
 
     // destructuring the user object
     const {password:pass, ...userWithoutPassword} = user._doc
-    console.log('userWithoutPassword:'+ JSON.stringify(userWithoutPassword));
+    //console.log('userWithoutPassword:'+ JSON.stringify(userWithoutPassword));
 
     // send the token back to the client
     res

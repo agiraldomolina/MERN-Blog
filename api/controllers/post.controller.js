@@ -3,7 +3,7 @@ import { catchAsync } from "../utils/catchAsync.js";
 import { errorHandler } from "../utils/error.js";
 
 export const create = catchAsync(async (req, res, next) => {
-    console.log(req.user._id);
+    //console.log(req.user._id);
     if (!req.user.isAdmin) return next(errorHandler(403, 'You are not authorized to perform this action'));
     if (!req.body.title || !req.body.content) return next(errorHandler(400, 'Please provide a title and content'));
     const slug = req.body.title.split(' ').join('-').toLowerCase().replace(/[^a-zA-Z0-9-]/g, '-');  
@@ -26,7 +26,7 @@ export const deletePost = catchAsync(async (req, res, next) => {
 
 export const updatePost = catchAsync(async (req, res, next) => {
     if (req.params.userId!== req.user._id ||!req.user.isAdmin) return next(errorHandler(403, 'You are not authorized to perform this action'));
-    console.log(req.body);
+    //console.log(req.body);
     const updatedPost = await Post.findByIdAndUpdate(
         req.params.postId, 
         {

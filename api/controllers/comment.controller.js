@@ -6,7 +6,7 @@ export const createComment = catchAsync(async (req, res, next) => {
     //console.log('hi from create comment');
     //console.log(req.body);
     const { content, postId, userId } = req.body;
-    console.log(postId);
+    //console.log(postId);
 
     if(userId !== req.user._id) return next( errorHandler(401, 'You are not allowed to create comment'));
 
@@ -62,7 +62,7 @@ export const likeComment = catchAsync(async (req, res, next) => {
     res
     .status(200)
     .json(comment);
-    console.log(comment);
+    //console.log(comment);
 });
 
 export const editComment = catchAsync(async (req, res, next) => {
@@ -80,4 +80,15 @@ export const editComment = catchAsync(async (req, res, next) => {
     res
   .status(200)
   .json(editedComment);
+});
+
+export const deleteComment = catchAsync(async (req, res, next) => {
+    const comment = await Comment.findById(req.params.commentId);
+    //console.log('comment from deleteComment:'+ comment);
+    if(!comment) return next(errorHandler(404, 'Comment not found'));
+    if(!req.user.isAdmin && comment.userId!== req.user._id) return next(errorHandler(401, 'You are not allowed to delete this comment'));
+    await Comment.findByIdAndDelete(req.params.commentId);
+    res
+    .status(200)
+    .json('Comment deleted successfully');
 })

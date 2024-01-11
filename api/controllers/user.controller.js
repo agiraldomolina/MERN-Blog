@@ -12,7 +12,6 @@ export const getUsers = catchAsync( async(req,res,next) => {
     // chech is user is admin
     //console.log('admin : ' + req.user.isAdmin);
     if(!req.user.isAdmin) return next( errorHandler(403, 'You are not allow to view this user'));
-    console.log('hi')
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 10;
     const sortDirection = req.query.sort === 'asc'? 1:-1;
@@ -51,7 +50,7 @@ export const getUsers = catchAsync( async(req,res,next) => {
 
 export const updateUser = catchAsync( async(req,res,next) => {
     // console.log('userId from params: ' + req.params.userId);
-     console.log ('userId from user: ' + req.user._id);
+     //console.log ('userId from user: ' + req.user._id);
     // console.log('req.body:'+ JSON.stringify(req.body));
     // console.log (req.body)
     // console.log (req.body.username); 
@@ -65,7 +64,7 @@ export const updateUser = catchAsync( async(req,res,next) => {
         if(req.body.password.length < 6) return next( errorHandler(400, 'Password must be at least 6 characters'));
         req.body.password =  bcryptjs.hashSync(req.body.password, 10);
     }
-    console.log( req.body.username); 
+    //console.log( req.body.username); 
     if (req.body.username){
         //console.log('hi')
         if(req.body.username.length < 7 || req.body.username.length > 30){
@@ -124,7 +123,7 @@ export const signOut = catchAsync(async (req, res, next) => {
   });
 
   export const getUser = catchAsync( async (req, res, next) => {
-    console.log(req.params);
+    //console.log(req.params);
     const user = await User.findById(req.params.userId)
     if (!user) return next( errorHandler(404, 'User not found'));
     const {password,...userWithoutPassword} = user._doc;
