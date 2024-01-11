@@ -45,7 +45,7 @@ export const getPostComment = catchAsync(async (req, res, next) => {
 
 export const likeComment = catchAsync(async (req, res, next) => {
     const comment = await Comment.findById(req.params.commentId);
-    console.log('comment from likeComment: ' + comment);
+    //console.log('comment from likeComment: ' + comment);
     if(!comment) return next(errorHandler(404, 'Comment not found'));
 
     const userIndex = comment.likes.indexOf(req.user._id);

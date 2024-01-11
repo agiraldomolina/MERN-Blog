@@ -10,7 +10,7 @@ export default function CommentSection({postId}) {
     const [postComments, setPostComments] = useState([]);
     const [commentError, setCommentError] = useState(null);
     const navigate = useNavigate();
-    console.log(postComments);
+    //console.log('postComments starting code:' + JSON.stringify(postComments));
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -40,7 +40,7 @@ export default function CommentSection({postId}) {
     };
 
     const fetchPostComments = async () => {
-        console.log(postId);
+        //console.log(postId);
         try {
             const response = await fetch(`/api/comment/getPostComments/${postId}`);
             if (response.ok) {
@@ -72,14 +72,18 @@ export default function CommentSection({postId}) {
                 })
                 if (response.ok) {
                     const data = await response.json();
+                    //console.log(data);
                     setPostComments((prevComments) =>
-                      prevComments.map((comment) =>
-                        comment._id === commentId
-                          ? { ...comment, likes: data.likes, numberOfLikes: data.likes.length }
-                          : comment
-                      )
+                        prevComments.map((comment) =>
+                            comment._id === commentId
+                            ? { ...comment, likes: data.likes, numberOfLikes: data.likes.length }
+                            : comment
+                        )
                     );
-                    fetchPostComments();
+
+                    // console.log('postComments from if inside handleKike: ' + JSON.stringify(postComments));
+                    //fetchPostComments();
+                    // console.log('postComment from handleLike: ' + JSON.stringify(postComments));
                   }
               
         } catch (error) {
@@ -154,16 +158,16 @@ export default function CommentSection({postId}) {
                 </div>
                  {/* loop througth all comments and display them */}
                 {
-                    postComments.map((comment, index) => {
-                        console.log('postComment from throuble part:', comment);
-                        console.log('comment id from throuble part:', comment._id);
-                        return <Comment 
+                    postComments.map((comment, index) => (
+                        //console.log('postComment from throuble part:', comment);
+                        //console.log('comment id from throuble part:', comment._id);
+                        <Comment 
                             key={index} 
-                            commentId={comment._id} 
+                            comment={comment} 
                             onLike={handleLike}
-                            fetchPostComments={fetchPostComments}
-                        />;
-                    })
+                            
+                        />
+                    ))
                 }
                 </>
             )
