@@ -17,9 +17,6 @@ export default function Header() {
           dispatch(signOutStart());
           const response = await fetch(`/api/user/signout`, {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            }
           });
           const data = await response.json();
           !response.ok? dispatch(signOutFailure(data.message)) : dispatch(signOutSuccess())

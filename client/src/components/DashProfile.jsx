@@ -130,9 +130,6 @@ const handleDeleteAccount = async () => {
     dispatch(deleteUserStart());
     const response = await fetch(`/api/user/delete/${currentUser._id}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
     });
     const data = await response.json();
     if (!response.ok){
@@ -151,9 +148,6 @@ const handleSignOut = async () => {
     dispatch(signOutStart());
     const response = await fetch(`/api/user/signout`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
     });
     const data = await response.json();
     !response.ok? dispatch(signOutFailure(data.message)) : dispatch(signOutSuccess())

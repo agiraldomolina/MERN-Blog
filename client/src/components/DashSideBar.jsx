@@ -1,6 +1,6 @@
 import { Sidebar } from 'flowbite-react'
 import { useEffect, useState } from 'react';
-import { HiArrowSmRight, HiDocumentText, HiUser, HiOutlineUserGroup, HiOutlineAnnotation  } from 'react-icons/hi'
+import { HiArrowSmRight, HiDocumentText, HiUser, HiOutlineUserGroup, HiOutlineAnnotation, HiOutlineTemplate  } from 'react-icons/hi'
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from'react-redux';
 import { useSelector } from 'react-redux';
@@ -25,9 +25,6 @@ export default function DashSideBar() {
       dispatch(signOutStart());
       const response = await fetch(`/api/user/signout`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
       });
       const data = await response.json();
       !response.ok? dispatch(signOutFailure(data.message)) : dispatch(signOutSuccess())
@@ -40,6 +37,17 @@ export default function DashSideBar() {
     <Sidebar className='w-full md:w-56'>
         <Sidebar.Items>
             <Sidebar.ItemGroup className='flex flex-col gap-1'>
+              {currentUser && currentUser.isAdmin && (
+                <Link to="/dashboard?tab=dash">
+                  <Sidebar.Item 
+                    active={tab === 'dash' || !tab}
+                    icon={HiOutlineTemplate}
+                    as='div'
+                  >
+                      Dashboard
+                  </Sidebar.Item>
+              </Link>
+              )}
                 <Link to="/dashboard?tab=profile">
                     <Sidebar.Item 
                         active={tab === 'profile'}
@@ -56,7 +64,6 @@ export default function DashSideBar() {
                     <>
                       <Link to="/dashboard?tab=posts">
                           <Sidebar.Item 
-                              active={tab === 'posts'}
                               icon={HiDocumentText}
                               as='div'
                           >
@@ -65,7 +72,6 @@ export default function DashSideBar() {
                       </Link>                
                       <Link to="/dashboard?tab=users">
                           <Sidebar.Item 
-                              active={tab === 'users'}
                               icon={HiOutlineUserGroup}
                               as='div'
                           >
@@ -74,7 +80,6 @@ export default function DashSideBar() {
                       </Link>
                       <Link to="/dashboard?tab=comments">
                           <Sidebar.Item 
-                              active={tab === 'users'}
                               icon={HiOutlineAnnotation}
                               as='div'
                           >
