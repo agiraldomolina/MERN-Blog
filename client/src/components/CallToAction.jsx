@@ -6,7 +6,7 @@ export default function CallToAction() {
     <div id='first' className='flex flex-col justify-center items-center md:flex-row  p-5 border border-teal-500  rounded-tl-3xl rounded-br-3xl text-center gap-4 md:justify-between'>
         <div className='flex-1 justify-center flex flex-col'>
             <h2 className='text-2xl'>Embark on a Journey to Wellness!</h2>
-            <p className='text-gray-500 my-2'>If you're passionate about embracing a healthier lifestyle, discovering well-being tips, and nourishing your mind, body, and soul, then you're in the right place.</p>
+            <p className='text-gray-500 my-2 dark:text-gray-300'>If you're passionate about embracing a healthier lifestyle, discovering well-being tips, and nourishing your mind, body, and soul, then you're in the right place.</p>
 
         </div>
         <div id='second' className='flex-1'>
