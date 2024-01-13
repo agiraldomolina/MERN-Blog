@@ -6,7 +6,7 @@ import authRoutes from './routes/auth.route.js';
 import postRoutes from './routes/post.route.js';
 import commentRoutes from './routes/comment.route.js';
 import cookieParser from 'cookie-parser';
-import bodyParser from 'body-parser';
+import path from 'path';
 
 dotenv.config();
 
@@ -19,6 +19,8 @@ mongoose.connect(
     console.error(err)
 });
 
+const __dirname = path.resolve();
+
 const app = express();
 
 
@@ -26,9 +28,6 @@ const app = express();
 app.use(express.json());
 
 app.use(cookieParser()); // this allows the browser to extract the token from the cookies
-// app.use(bodyParser.json()); // Para analizar cuerpos de solicitud en formato JSON
-// app.use(bodyParser.urlencoded({ extended: true }));
-
 
 app.listen(3000, () => {
     console.log('Server running on port 3000!!!');
@@ -38,6 +37,12 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/comment', commentRoutes);
+
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
 
 app.use((err,req,res,next) => {
     const statusCode = err.statusCode || 500;
