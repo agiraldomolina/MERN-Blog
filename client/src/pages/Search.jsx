@@ -21,14 +21,21 @@ export default function Search() {
         const searchTermFromUrl = urlParams.get('searchTerm');
         const sortFromUrl = urlParams.get('sort');
         const categoryFromUrl = urlParams.get('category');
-        //console.log('category from useEffect' + categoryFromUrl);
-    
-        setSideBarData({
-            ...sideBarData,
-            searchTerm: searchTermFromUrl,
-            sort: sortFromUrl,
-            category: categoryFromUrl,
-        });
+        if (categoryFromUrl === 'uncategorized') {
+            setSideBarData({
+                ...sideBarData,
+                searchTerm: searchTermFromUrl,
+                sort: sortFromUrl,
+                category: '',  // Establecer category como una cadena vacía
+            });
+        } else {
+            setSideBarData({
+                ...sideBarData,
+                searchTerm: searchTermFromUrl,
+                sort: sortFromUrl,
+                category: categoryFromUrl,
+            });
+        }
     
         const fetchPosts = async () => {
             setLoading(true);
@@ -77,7 +84,9 @@ export default function Search() {
         const urlParams = new URLSearchParams();
         urlParams.set('searchTerm', sideBarData.searchTerm);
         urlParams.set('sort', sideBarData.sort);
-        urlParams.set('category', sideBarData.category);
+        if (sideBarData.category && sideBarData.category !== 'uncategorized') {
+            urlParams.set('category', sideBarData.category);
+        }
         const searchQuery=urlParams.toString();
         console.log('searchQuery from handleSubmit:' + searchQuery);
         navigate(`/search?${searchQuery}`);

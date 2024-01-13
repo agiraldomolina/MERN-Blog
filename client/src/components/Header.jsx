@@ -56,18 +56,27 @@ export default function Header() {
             Blog
         </Link>
         <form  onSubmit={handleSubmit}>
-            <TextInput
-                type='text'
-                placeholder='Search...'
-                value={searchTerm}
-                onChange={(event) => setSearchTerm(event.target.value)}
-                rightIcon={AiOutlineSearch}
-                className='hidden lg:inline'
-            ></TextInput>
+            <Link to='/search'>
+                <TextInput
+                    type='text'
+                    placeholder='Search...'
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                    rightIcon={AiOutlineSearch}
+                    className='hidden lg:inline'
+                ></TextInput>
+
+            </Link>
         </form>
-        <Button className='w-12 h-10 lg:hidden' color='gray' pill>
-            <AiOutlineSearch />
-        </Button>
+        <Link to='/search'>
+            <Button 
+                className='w-12 h-10 lg:hidden' 
+                color='gray' 
+                pill
+            >
+                <AiOutlineSearch />
+            </Button>
+        </Link>
         <div className="flex gap-2 md:order-2">
             <Button  
                 className='w-12 h-10 hidden sm:inline' 
