@@ -1,16 +1,20 @@
 import { Avatar, Button, Dropdown, Navbar, TextInput } from 'flowbite-react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { AiOutlineSearch} from'react-icons/ai'
 import { FaMoon, FaSun } from 'react-icons/fa'
 import {useSelector, useDispatch} from'react-redux'
 import { changeTheme } from '../redux/theme/themeSlice';
 import { signOutStart, signOutSuccess, signOutFailure } from '../redux/user/userSlice'
+import { useEffect, useState } from 'react'
 
 export default function Header() {
+    const [searchTerm, setSearchTerm] = useState('');
     const { currentUser } = useSelector((state) => state.user);
     const {theme} = useSelector((state) => state.theme);
     const dispatch = useDispatch();
+    const navigate= useNavigate();
     const path = useLocation().pathname;
+    //console.log('Look for: ' + searchTerm);
 
     const handleSignOut = async () => {
         try {
@@ -24,6 +28,22 @@ export default function Header() {
           dispatch(signOutFailure(error.message));
         }
       };
+
+      const handleSubmit =(event)=>{
+        event.preventDefault();
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('searchTerm', searchTerm);
+        const searchQuery = urlParams.toString();
+        navigate(`/search?${searchQuery}`);
+      }
+
+      useEffect(()=>{
+        const urlParams= new URLSearchParams(location.search);
+        const searchTermFromUrl = urlParams.get('searchTerm');
+        if(searchTermFromUrl){
+          setSearchTerm(searchTermFromUrl);
+        }
+      },[location.search])
       
   return (
     <>
@@ -35,10 +55,12 @@ export default function Header() {
             >  Alba's  </span>
             Blog
         </Link>
-        <form >
+        <form  onSubmit={handleSubmit}>
             <TextInput
                 type='text'
                 placeholder='Search...'
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
                 rightIcon={AiOutlineSearch}
                 className='hidden lg:inline'
             ></TextInput>
