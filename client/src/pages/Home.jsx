@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <div>
       {/* div for the top section */}
-      <div className='flex flex-col gap-6 pt-28 px-5 pb-5 max-w-6xl mx-auto'>
+      <div className='flex flex-col pt:10 sm:gap-20 sm:pt-28 px-10 pb-5 max-w-6xl mx-auto'>
         <h1 className=' text-gray-600 text-3xl font-bold  lg:text-6xl dark:text-gray-400'
         >
             Welcome to our <span className='text-teal-600'>lifestyle blog!</span>
