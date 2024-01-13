@@ -21,21 +21,12 @@ export default function Search() {
         const searchTermFromUrl = urlParams.get('searchTerm');
         const sortFromUrl = urlParams.get('sort');
         const categoryFromUrl = urlParams.get('category');
-        if (categoryFromUrl === 'uncategorized') {
-            setSideBarData({
-                ...sideBarData,
-                searchTerm: searchTermFromUrl,
-                sort: sortFromUrl,
-                category: '',  // Establecer category como una cadena vacía
-            });
-        } else {
-            setSideBarData({
-                ...sideBarData,
-                searchTerm: searchTermFromUrl,
-                sort: sortFromUrl,
-                category: categoryFromUrl,
-            });
-        }
+        setSideBarData({
+            ...sideBarData,
+            searchTerm: searchTermFromUrl || '',
+            sort: sortFromUrl || 'desc',
+            category: categoryFromUrl,
+        });
     
         const fetchPosts = async () => {
             setLoading(true);
@@ -111,41 +102,43 @@ export default function Search() {
         <div className='p-7 border-b md:border-r md:min-h-screen border-gray-500'>
             <form className='flex flex-col gap-8' onSubmit={handleSubmit}>
                 {/* div for search term */}
-                <div className='flex items-center gap-2'>
-                    <label className='whitespace-nowrap font-semibold'> Search term:</label>
-                    <TextInput
-                        placeholder='Search...'
-                        id='searchTerm'
-                        type='text'
-                        value={sideBarData.searchTerm}
-                        onChange={handleChange}
-                    />
-                </div>
-                {/* di for sort select */}
-                <div className='flex items-center gap-2'>
-                    <label className='font-semibold'> Category: </label>
-                    <Select
-                        onChange={handleChange}
-                        value={sideBarData.category}
-                        id='category'
-                    >
-                        <option value='uncategorized'>Uncategorized</option>
-                        <option value='Nutrition and Healthy Eating'>Nutrition and Healthy Eating </option>
-                        <option value='Fitness and Exercise'>Fitness and Exercise</option>
-                        <option value='Mental Health and Mindfulness'>Mental Health and Mindfulness</option>
-                        <option value='Lifestyle and Wellness Tips'>Lifestyle and Wellness Tips</option>
-                    </Select>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <label className='font-semibold'> Sort: </label>
-                    <Select
-                        onChange={handleChange}
-                        Value={sideBarData.sort}
-                        id='sort'
-                    >
-                        <option value='asc'>Oldest</option>
-                        <option value='desc'>Latest</option>
-                    </Select>
+                {/* div for grid layout */}
+                <div className='grid grid-cols-2'>
+                    {/* div for labels */}
+                    <div className='flex flex-col alig-items-center gap-8'>
+                        <label className='whitespace-nowrap font-semibold'> Search term:</label>
+                        <label className='font-semibold'> Category: </label>
+                        <label className='font-semibold'> Sort: </label>
+                    </div>
+                    {/* div for input fields */}
+                    <div className='flex flex-col gap-2'>
+                        <TextInput
+                            placeholder='Search...'
+                            id='searchTerm'
+                            type='text'
+                            value={sideBarData.searchTerm}
+                            onChange={handleChange}
+                        />
+                        <Select
+                            onChange={handleChange}
+                            value={sideBarData.category}
+                            id='category'
+                        >
+                            <option value=''>Uncategorized</option>
+                            <option value='Nutrition and Healthy Eating'>Nutrition and Healthy Eating </option>
+                            <option value='Fitness and Exercise'>Fitness and Exercise</option>
+                            <option value='Mental Health and Mindfulness'>Mental Health and Mindfulness</option>
+                            <option value='Lifestyle and Wellness Tips'>Lifestyle and Wellness Tips</option>
+                        </Select>
+                        <Select
+                            onChange={handleChange}
+                            Value={sideBarData.sort}
+                            id='sort'
+                        >
+                            <option value='asc'>Oldest</option>
+                            <option value='desc'>Latest</option>
+                        </Select>
+                    </div>
                 </div>
                 <Button
                     type='submit'
