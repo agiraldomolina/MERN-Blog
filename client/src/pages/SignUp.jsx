@@ -2,7 +2,7 @@ import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaEye, FaEyeSlash } from'react-icons/fa'
-import {HiMail} from'react-icons/hi'
+import {HiMail, HiUserCircle} from'react-icons/hi'
 import OAuth from '../components/OAuth'
 
 export default function SignUp() {
@@ -75,6 +75,7 @@ export default function SignUp() {
               <Label value='Your Username' />
               <TextInput
                 type='text'
+                rightIcon={HiUserCircle}
                 placeholder='Username'
                 id='username'
                 onChange={handleChange}
@@ -91,7 +92,7 @@ export default function SignUp() {
               />
             </div>
             <div>
-              <Label value='Your username' />
+              <Label value='Your password' />
               <div onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? (
                 <TextInput

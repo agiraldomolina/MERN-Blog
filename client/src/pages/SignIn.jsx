@@ -94,7 +94,7 @@ export default function SignIn() {
               {showPassword ? (
                 <TextInput
                   type="text"
-                  placeholder=""
+                  placeholder="password"
                   id="password"
                   rightIcon={FaEye}
                   onChange={handleChange}
