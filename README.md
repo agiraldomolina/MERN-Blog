@@ -83,7 +83,7 @@ Admin Mode:
 - Blog Management: Create, edit, and delete blog posts.
 Dashboard: Admin dashboard provides an overview of posts, comments, and users.
 
-p align='center'>
+<p align='center'>
   <img src="https://i.imgur.com/atIo12i.png" alt="image" width="500">
 </p>
 
