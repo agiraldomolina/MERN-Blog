@@ -89,12 +89,12 @@ export default function SignIn() {
               />
             </div>
             <div>
-              <Label value='Your username' />
+              <Label value='Your password' />
               <div onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? (
                 <TextInput
                   type="text"
-                  placeholder="******"
+                  placeholder=""
                   id="password"
                   rightIcon={FaEye}
                   onChange={handleChange}
