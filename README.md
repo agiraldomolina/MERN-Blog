@@ -8,7 +8,7 @@
   <a title="Firebase" href="https://firebase.google.com/"><img width="100" height="50"  src="https://www.vectorlogo.zone/logos/firebase/firebase-ar21.svg" ></a>
   <a title="JavaScript" href="https://developer.mozilla.org/es/docs/Web/JavaScript"><img  src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E"></a>
 <a title="react" href="https://es.react.dev/"><img width="80" src="https://www.vectorlogo.zone/logos/reactjs/reactjs-ar21.svg"></a>
-<a title="Nodejs" href="https://nodejs.org/"><img width="80" height="40"  src="https://www.vectorlogo.zone/logos/nodejs/nodejs-ar21.svg"    ></a><a title="express" href="https://expressjs.com/"><img  src="https://www.vectorlogo.zone/logos/expressjs/expressjs-ar21.svg"></a>
+<a title="Nodejs" href="https://nodejs.org/"><img width="80" height="40"  src="https://www.vectorlogo.zone/logos/nodejs/nodejs-ar21.svg"    ></a><a title="express" href="https://expressjs.com/"><img  src="https://www.vectorlogo.zone/logos/expressjs/expressjs-ar21.svg" height="50"></a>
 <a title="tailwind" href="https://tailwindcss.com/"><img width="80" src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-ar21.svg"></a></a>
 <a title="mongoDB" href="https://www.mongodb.com/atlas/database><img width="80" src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg"></a>
 
@@ -58,7 +58,7 @@ Advanced Search Filters:
 - Keyword Search: Perform keyword searches to find specific articles.
 
 <p align='center'>
-  <img src="https://i.imgur.com/TfFrrEr.png" alt="image" width="300">
+  <img src="https://i.imgur.com/TfFrrEr.png" alt="image" width="500">
 </p>
 
 Authentication:
@@ -76,14 +76,16 @@ User Mode:
 - Commenting: Users can create, edit, delete comments and like posts.
 
 <p align='center'>
-  <img src="https://i.imgur.com/can9HmC.png" alt="image" width="300">
+  <img src="https://i.imgur.com/can9HmC.png" alt="image" width="500">
 </p>
 
 Admin Mode:
 - Blog Management: Create, edit, and delete blog posts.
 Dashboard: Admin dashboard provides an overview of posts, comments, and users.
 
-![Alt text](client/src/assets/dashboard.png)
+p align='center'>
+  <img src="https://i.imgur.com/atIo12i.png" alt="image" width="500">
+</p>
 
 
 <a name='deployment'></a>
