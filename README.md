@@ -2,7 +2,7 @@
 <h1 align='center'>Alba's Blog</h1>
 
 <p align="center">
-  <img src="../MERN_Blog/client/src/assets/PageLogo.png" width="200px" alt="logo">
+  <img src="https://i.imgur.com/LPNjvu7.png" width="200px" alt="logo">
 </p>
 <div align="center">
   <a title="Firebase" href="https://firebase.google.com/"><img width="100" height="50"  src="https://www.vectorlogo.zone/logos/firebase/firebase-ar21.svg" ></a>
@@ -39,32 +39,45 @@ Welcome to my latest project, a dynamic blog centered around promoting a healthy
 
 - Fully Responsive: Ensures seamless functionality across various devices for a consistent user experience.
 
-![Alt text](client/src/assets/aboutsmalldars.png)
-![Alt text](client/src/assets/aboutbigdark.png)
+<p align="center">
+  <img src="https://i.imgur.com/2PX15YR.png" alt="Descripción de la imagen 1" width="100" style="margin-right: 20px;">
+  <img src="https://i.imgur.com/XnnwOaV.png" alt="Descripción de la imagen 2" width="300">
+</p>
 
 -  Dark Mode: Allows users to toggle between light and dark modes for a personalized viewing experience.
 
-![Alt text](client/src/assets/aboutbigclear.png)
-![Alt text](client/src/assets/aboutbigdark.png)
+<p align="center">
+  <img src="https://i.imgur.com/W0M5XD3.png" alt="Descripción de la imagen 1" width="200"style="margin-right: 20px">
+  <img src="https://i.imgur.com/ouBH1p7.png" alt="Descripción de la imagen 2" width="200">
+</p>
+
 
 Advanced Search Filters:
 
 - Search by Categories: Users can filter posts by predefined categories.
 - Keyword Search: Perform keyword searches to find specific articles.
 
-![Alt text](client/src/assets/filters1.png)
+<p align='center'>
+  <img src="https://i.imgur.com/TfFrrEr.png" alt="image" width="300">
+</p>
 
 Authentication:
 
 - Email and Password: Users can register and log in using their email and password.
 Google Authentication: Support for signing in with Google accounts.
 
-
+<p align='center'>
+  <img src="https://i.imgur.com/3crIdPU.png" alt="image" width="300">
+</p>
 
 User and Admin Modes:
 
 User Mode:
 - Commenting: Users can create, edit, delete comments and like posts.
+
+<p align='center'>
+  <img src="https://i.imgur.com/can9HmC.png" alt="image" width="300">
+</p>
 
 Admin Mode:
 - Blog Management: Create, edit, and delete blog posts.
