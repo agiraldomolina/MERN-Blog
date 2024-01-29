@@ -15,6 +15,8 @@ export default function Search() {
     const [showMore, setShowMore] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+   // console.log('posts from search: '+ JSON.stringify (posts));
+    console.log(posts.length);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);

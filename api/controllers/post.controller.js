@@ -83,4 +83,5 @@ export const getPosts = catchAsync(async (req, res, next) => {
         totalPosts,
         lastmonthPosts
     });
-})
+});
+

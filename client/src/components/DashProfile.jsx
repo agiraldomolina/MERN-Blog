@@ -100,7 +100,7 @@ const handleSubmit = async(event) => {
   }
   try {
     dispatch(updateStart());
-    console.log('current user from dashboard profile: ' +  currentUser._id)
+    //console.log('current user from dashboard profile: ' +  currentUser._id)
     const response = await fetch(`/api/user/update/${currentUser._id}`, {
       method: 'PUT',
       headers: {
@@ -125,7 +125,7 @@ const handleSubmit = async(event) => {
 
 const handleDeleteAccount = async () => {
   setShowModal(false);
-  console.log('current user from dashboard profile: ' +  currentUser._id)
+  //console.log('current user from dashboard profile: ' +  currentUser._id)
   try {
     dispatch(deleteUserStart());
     const response = await fetch(`/api/user/delete/${currentUser._id}`, {

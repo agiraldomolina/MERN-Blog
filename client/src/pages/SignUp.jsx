@@ -1,7 +1,7 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaEye, FaEyeSlash } from'react-icons/fa'
+import { FaEye, FaEyeSlash,  } from'react-icons/fa'
 import {HiMail, HiUserCircle} from'react-icons/hi'
 import OAuth from '../components/OAuth'
 
